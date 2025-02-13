@@ -160,7 +160,6 @@ public class WordHunt : MonoBehaviour
     {
         UserInfo users = JsonUtility.FromJson<UserInfo>(json);
         ScoreDataStore.UserScores.AddRange(users.data);
-        DisplayLeaderBoard();
     }
     //----------------------------- JSLIB FUNCTIONS -------------------------------------------------------------------------
     public void Setup()
@@ -512,16 +511,6 @@ public class WordHunt : MonoBehaviour
         for (int i = 0; i < insertedWords.Count; i++)
         {
             ScrollViewWords.instance.SpawnWordCell(insertedWords[i], delay);
-            delay += .05f;
-        }
-    }
-    public void DisplayLeaderBoard()
-    {
-        float delay = 0;
-        print(ScoreDataStore.UserScores.Count);
-        for (int i = 0; i < ScoreDataStore.UserScores.Count ; i++)
-        {
-            print(ScoreDataStore.UserScores[i]);
             delay += .05f;
         }
     }
