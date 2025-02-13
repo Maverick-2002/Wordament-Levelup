@@ -28,10 +28,9 @@ public class MenuScript : MonoBehaviour {
     }
     public void Home()
     {
-        QuizScroll.instance.ResetQuizScroll();
         ScrollViewWords.instance.ResetQuizScroll();
         WordHunt.instance.ClearWords();
-        WordDataStore.CategoryWordMap.Clear();
+        WordDataStore.WordsData.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

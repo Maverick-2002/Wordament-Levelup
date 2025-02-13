@@ -49,7 +49,6 @@ public class WordHunt : MonoBehaviour
     [Header("List of Words")]
     public List<string> words = new List<string>();
     public List<string> insertedWords = new List<string>();
-    public List<string> CategoryWords = new List<string>();
     public static class ScoreDataStore
     {
         public static List<UserData> UserScores = new List<UserData>();
@@ -121,32 +120,21 @@ public class WordHunt : MonoBehaviour
     public class WordData
     {
         public List<string> words;
-        public string CatagoryName;
     }
     public static class WordDataStore
     {
-        public static List<string> CategoryWords = new List<string>();
-        public static Dictionary<string, List<string>> CategoryWordMap = new Dictionary<string, List<string>>();
+        public static List<string> WordsData = new List<string>();
     }
 
     public void OnWordsReceived(string wordsJson)
     {
         Wordlist wordlist = JsonUtility.FromJson<Wordlist>(wordsJson);
-        DisplayQuizSelectedWords();
         foreach (var wordData in wordlist.Data)
         {
-            print("Category: " + wordData.CatagoryName);
-            CategoryWords.Add(wordData.CatagoryName);
-
-            WordDataStore.CategoryWords.Add(wordData.CatagoryName);
-            if (!WordDataStore.CategoryWordMap.ContainsKey(wordData.CatagoryName))
-            {
-                WordDataStore.CategoryWordMap[wordData.CatagoryName] = new List<string>();
-            }
-
+            print("Words " + wordData.words);
             foreach (var word in wordData.words)
             {
-                WordDataStore.CategoryWordMap[wordData.CatagoryName].Add(word);
+                WordDataStore.WordsData.Add(word);
             }
         }
     }
@@ -527,27 +515,13 @@ public class WordHunt : MonoBehaviour
             delay += .05f;
         }
     }
-    public void DisplayQuizSelectedWords()
-    {
-        
-        float delay = 0;
-        print(CategoryWords.Count);
-        for (int i = 0; i < CategoryWords.Count; i++)
-        {
-            QuizScroll.instance.SpawnQuizCell(CategoryWords[i], delay);
-            delay += .05f;
-        }
-    }
     public void DisplayLeaderBoard()
     {
-
-
         float delay = 0;
         print(ScoreDataStore.UserScores.Count);
         for (int i = 0; i < ScoreDataStore.UserScores.Count ; i++)
         {
             print(ScoreDataStore.UserScores[i]);
-            LeaderBoard.instance.SpawnLeaderBoard(ScoreDataStore.UserScores[i].Name,i+1, ScoreDataStore.UserScores[i].Time, delay);
             delay += .05f;
         }
     }
